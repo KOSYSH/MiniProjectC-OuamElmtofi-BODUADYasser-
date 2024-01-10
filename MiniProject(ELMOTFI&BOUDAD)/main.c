@@ -7,6 +7,7 @@ struct pendu {
     char word[20];
     char description[1000];
 };
+
 void printHangman(int lives) {
     printf("Lives: %d\n", lives);
 
@@ -116,7 +117,7 @@ int main() {
         case 1:
             printf("Enter password: ");
             i = 0;
-            while  (1) {
+            while (1) {
                 ch = getch();
 
                 if (ch == 13)
@@ -126,7 +127,6 @@ int main() {
                     printf("*");
                 }
             }
-
 
             if (strcmp(password, correctPassword) == 0) {
                 printf("\nAccess granted!\n");
@@ -175,157 +175,152 @@ int main() {
 
         case 2:
             do {
-            printf("Welcome to the Hangman game!\n");
-            printf("Select a mode (1 or 2):\n1. Computer provides description, and you guess the word \n2. Two players - Player 1 provides word and description, Player 2 guesses\n");
-            scanf("%d", &i);
+                printf("Welcome to the Hangman game!\n");
+                printf("Select a mode (1 or 2):\n1. Computer provides description, and you guess the word \n2. Two players - Player 1 provides word and description, Player 2 guesses\n");
+                scanf("%d", &i);
 
-            switch (i) {
-                case 2:
-                    printf("Player 1, enter the word: ");
-                    i=0;
+                switch (i) {
+                    case 2:
+                        printf("Player 1, enter the word: ");
+                        i = 0;
 
-                    while (1) {
-                        ch = getch();
+                        while (1) {
+                            ch = getch();
 
-                        if (ch == 13) {
-                            break;
+                            if (ch == 13) {
+                                break;
+                            } else {
+                                x[numWords].word[i++] = ch;
+                                printf("*");
+                            }
+                        }
+
+                        printf("Player 1, enter the description: ");
+                        scanf(" %[^\n]", x[numWords].description);
+
+                        w = fopen("pendu.txt", "a");
+                        if (w == NULL) {
+                            printf("Error opening file\n");
                         } else {
-                            x[numWords].word[i++] = ch;
-                            printf("*");
-                        }
-                    }
+                            fprintf(w, "%s %s\n", x[numWords].word, x[numWords].description);
+                            printf("Word and description added successfully!\n");
 
-                    printf("Player 1, enter the description: ");
-                    scanf(" %[^\n]", x[numWords].description);
-
-                    w = fopen("pendu.txt", "a");
-                    if (w == NULL) {
-                        printf("Error opening file\n");
-                    } else {
-                        fprintf(w, "%s %s\n", x[numWords].word, x[numWords].description);
-                        printf("Word and description added successfully!\n");
-
-                        fclose(w);
-                        numWords++;
-                    }
-
-                    printf("Player 2, guess the word letter by letter!\n");
-
-                    memset(guessed, 0, sizeof(guessed));
-
-                    printf("Description: %s\n", x[numWords - 1].description);
-                    printTable(x[numWords - 1].word, guessed);
-                    char guess;
-
-                    while (life != 0 && found < strlen(x[numWords - 1].word)) {
-                        printHangman(life);
-                        printHeart(life);
-
-                        printf("Enter a letter: ");
-                        scanf(" %c", &guess);
-
-                        int correct_guess = guessLetter(x[numWords - 1].word, guessed, guess);
-
-                        if (correct_guess) {
-                            found = 0;
-                            for (i = 0; i < strlen(x[numWords - 1].word); ++i) {
-                                if (guessed[i] == 1) {
-                                    found++;
-                                }
-                            }
+                            fclose(w);
+                            numWords++;
                         }
 
+                        printf("Player 2, guess the word letter by letter!\n");
+
+                        memset(guessed, 0, sizeof(guessed));
+
+                        printf("Description: %s\n", x[numWords - 1].description);
                         printTable(x[numWords - 1].word, guessed);
+                        char guess;
 
-                        if (!correct_guess) {
-                            --life;
-                            printf("Incorrect! The letter is not in the word.\n");
-                        }
-                    }
+                        while (life != 0 && found < strlen(x[numWords - 1].word)) {
+                            printHangman(life);
+                            printHeart(life);
 
-                    if (found == strlen(x[numWords - 1].word)) {
-                        printf("Congratulations! You guessed the word: %s\n", x[numWords - 1].word);
-                    } else {
-                        printf("Sorry, you ran out of tries. The correct word was: %s\n", x[numWords - 1].word);
-                    }
-                    play_again_label:
-                    printf("Do you want to play again? (1 for Yes, 0 for No): ");
-                    scanf("%d", &playagain);
+                            printf("Enter a letter: ");
+                            scanf(" %c", &guess);
 
-                    if ((playagain == 0 || playagain == 1)) {
-                        playagain;
-                    } else {
-                        printf("Invalid input. Please enter 1 for Yes or 0 for No.\n");
-                        while (getchar() != '\n'); // Clear input buffer
-                        goto play_again_label;
-                    }
+                            int correct_guess = guessLetter(x[numWords - 1].word, guessed, guess);
 
-                    break;
-
-                case 1:
-                    printf("Choose a number between 1 and %d: ", numWords);
-                number:
-                    scanf("%d", &chosenNumber);
-                    if (chosenNumber < 1 || chosenNumber > numWords) {
-                        printf("Invalid number. Please choose a number between 1 and %d.\n", numWords);
-                        goto number;
-                    }
-
-                    wordIndex = chosenNumber - 1;
-
-                    guessed[strlen(x[wordIndex].word)];
-                    memset(guessed, 0, sizeof(guessed));
-
-                    printf("Description: %s\n", x[wordIndex].description);
-                    printTable(x[wordIndex].word, guessed);
-                    while (life != 0 && found < strlen(x[wordIndex].word)) {
-                        printHangman(life);
-                        printHeart(life);
-
-                        printf("Enter a letter: ");
-                        scanf(" %c", &guess);
-
-                        int correct_guess = guessLetter(x[wordIndex].word, guessed, guess);
-
-                        if (correct_guess) {
-                            found = 0;
-                            for (i = 0; i < strlen(x[wordIndex].word); ++i) {
-                                if (guessed[i] == 1) {
-                                    found++;
+                            if (correct_guess) {
+                                found = 0;
+                                for (i = 0; i < strlen(x[numWords - 1].word); ++i) {
+                                    if (guessed[i] == 1) {
+                                        found++;
+                                    }
                                 }
+                            }
+
+                            printTable(x[numWords - 1].word, guessed);
+
+                            if (!correct_guess) {
+                                --life;
+                                printf("Incorrect! The letter is not in the word.\n");
                             }
                         }
 
-                        printTable(x[wordIndex].word, guessed);
-
-                        if (!correct_guess) {
-                            --life;
-                            printf("Incorrect! The letter is not in the word.\n");
+                        if (found == strlen(x[numWords - 1].word)) {
+                            printf("Congratulations! You guessed the word: %s\n", x[numWords - 1].word);
+                        } else {
+                            printf("Sorry, you ran out of tries. The correct word was: %s\n", x[numWords - 1].word);
                         }
-                    }
+                        break;
 
-                    if (found == strlen(x[wordIndex].word)) {
-                        printf("Congratulations! You guessed the word: %s\n", x[wordIndex].word);
-                    } else {
-                        printf("Sorry, you ran out of tries. The correct word was: %s\n", x[wordIndex].word);
-                    }
-                play_again_label_1:
-                    printf("Do you want to play again? (1 for Yes, 0 for No): ");
-                    scanf("%d", &playagain);
+                    case 1:
+                        printf("Choose a number between 1 and %d: ", numWords);
+                    number:
+                        scanf("%d", &chosenNumber);
+                        if (chosenNumber < 1 || chosenNumber > numWords) {
+                            printf("Invalid number. Please choose a number between 1 and %d.\n", numWords);
+                            goto number;
+                        }
 
-                    if ((playagain == 0 || playagain == 1)) {
-                        playagain;
-                    } else {
-                        printf("Invalid input. Please enter 1 for Yes or 0 for No.\n");
-                        while (getchar() != '\n'); // Clear input buffer
-                        goto play_again_label_1;
-                    }
-                    break;
-            }
-            } while(playagain != 0);
+                        wordIndex = chosenNumber - 1;
 
-            printf("Thank you for playing!\n");
-            return 0;
+                        guessed[strlen(x[wordIndex].word)];
+                        memset(guessed, 0, sizeof(guessed));
+
+                        printf("Description: %s\n", x[wordIndex].description);
+                        printTable(x[wordIndex].word, guessed);
+                        while (life != 0 && found < strlen(x[wordIndex].word)) {
+                            printHangman(life);
+                            printHeart(life);
+
+                            printf("Enter a letter: ");
+                            scanf(" %c", &guess);
+
+                            int correct_guess = guessLetter(x[wordIndex].word, guessed, guess);
+
+                            if (correct_guess) {
+                                found = 0;
+                                for (i = 0; i < strlen(x[wordIndex].word); ++i) {
+                                    if (guessed[i] == 1) {
+                                        found++;
+                                    }
+                                }
+                            }
+
+                            printTable(x[wordIndex].word, guessed);
+
+                            if (!correct_guess) {
+                                --life;
+                                printf("Incorrect! The letter is not in the word.\n");
+                            }
+                        }
+
+                        if (found == strlen(x[wordIndex].word)) {
+                            printf("Congratulations! You guessed the word: %s\n", x[wordIndex].word);
+                        } else {
+                            printf("Sorry, you ran out of tries. The correct word was: %s\n", x[wordIndex].word);
+                        }
+                        break;
+                }
+
+                play_again_label:
+                printf("Do you want to play again? (1 for Yes, 0 for No): ");
+                scanf("%d", &playagain);
+
+                if (playagain == 1) {
+                    // Reset game variables here
+                    life = 5;
+                    found = 0;
+                    memset(guessed, 0, sizeof(guessed));
+                } else if (playagain == 0) {
+                    printf("Thank you for playing!\n");
+                    break;  // Exit the loop and end the game
+                } else {
+                    printf("Invalid input. Please enter 1 for Yes or 0 for No.\n");
+                    while (getchar() != '\n'); // Clear input buffer
+                    goto play_again_label;
+                }
+
+            } while (playagain != 0);
+
+            break;
     }
 
     return 0;
