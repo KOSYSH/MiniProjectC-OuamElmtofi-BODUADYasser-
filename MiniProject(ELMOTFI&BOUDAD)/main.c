@@ -43,7 +43,8 @@ void printHangman(int lives) {
 }
 
 void printTable(char word[], int guessed[]) {
-    for (int i = 0; i < strlen(word); ++i) {
+    int i;
+    for (i = 0; i < strlen(word); ++i) {
         if (guessed[i] == 1) {
             printf("%c ", word[i]);
         } else {
@@ -55,8 +56,8 @@ void printTable(char word[], int guessed[]) {
 
 int guessLetter(char word[], int guessed[], char guess) {
     int correct_guess = 0;
-
-    for (int i = 0; i < strlen(word); ++i) {
+    int i;
+    for (i = 0; i < strlen(word); ++i) {
         if (word[i] == guess && guessed[i] == 1) {
             printf("You have already guessed the letter %c. Try again.\n", guess);
             correct_guess = 1;
@@ -73,8 +74,9 @@ int guessLetter(char word[], int guessed[], char guess) {
 }
 
 void printHeart(int lives) {
+    int i;
     printf("\tLives: ");
-    for (int i = 0; i < lives; ++i) {
+    for (i = 0; i < lives; ++i) {
         printf("* ");
     }
     printf("\n");
@@ -186,10 +188,8 @@ int main() {
                         ch = getch();
 
                         if (ch == 13) {
-                            // Enter key pressed, end the input loop
                             break;
                         } else {
-                            // Print asterisk for each character except backspace
                             x[numWords].word[i++] = ch;
                             printf("*");
                         }
