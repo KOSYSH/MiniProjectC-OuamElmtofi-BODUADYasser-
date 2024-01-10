@@ -178,7 +178,7 @@ int main() {
             switch (i) {
                 case 2:
                     printf("Player 1, enter the word: ");
-
+                    i = 0;
                     while (1) {
                         ch = getch();
 
