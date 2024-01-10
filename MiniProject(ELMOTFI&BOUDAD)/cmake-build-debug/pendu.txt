@@ -1,0 +1,6 @@
+cat It's an animal with fur, and it is cute.
+dog It's a common household pet known for loyalty.
+bird It has feathers, wings, and can fly.
+fish It lives in water and breathes through gills.
+frog It's a small animal that can jump long distances.
+police Someone that protect the country

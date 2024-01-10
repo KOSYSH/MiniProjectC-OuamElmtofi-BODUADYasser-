@@ -1,0 +1,3 @@
+C:/Users/MYass/Documents/Porjcets C/MiniProject(ELMOTFI&BOUDAD)/cmake-build-debug/CMakeFiles/MiniProject_ELMOTFI_BOUDAD_.dir
+C:/Users/MYass/Documents/Porjcets C/MiniProject(ELMOTFI&BOUDAD)/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/MYass/Documents/Porjcets C/MiniProject(ELMOTFI&BOUDAD)/cmake-build-debug/CMakeFiles/rebuild_cache.dir
