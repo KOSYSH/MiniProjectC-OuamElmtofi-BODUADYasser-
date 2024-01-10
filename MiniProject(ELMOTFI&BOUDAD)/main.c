@@ -83,7 +83,8 @@ void printHeart(int lives) {
 int main() {
     int admin, i;
     char password[20];
-    const char *correctPassword = "Yasserouiam";
+    const char *correctPassword = "shadow";
+    int playagain;
 
     struct pendu x[100];
     int numWords = 0;
@@ -171,6 +172,7 @@ int main() {
             break;
 
         case 2:
+            do {
             printf("Welcome to the Hangman game!\n");
             printf("Select a mode (1 or 2):\n1. Computer provides description, and you guess the word \n2. Two players - Player 1 provides word and description, Player 2 guesses\n");
             scanf("%d", &i);
@@ -178,7 +180,8 @@ int main() {
             switch (i) {
                 case 2:
                     printf("Player 1, enter the word: ");
-                    i = 0;
+                    i=0;
+
                     while (1) {
                         ch = getch();
 
@@ -245,6 +248,18 @@ int main() {
                     } else {
                         printf("Sorry, you ran out of tries. The correct word was: %s\n", x[numWords - 1].word);
                     }
+                    play_again_label:
+                    printf("Do you want to play again? (1 for Yes, 0 for No): ");
+                    scanf("%d", &playagain);
+
+                    if ((playagain == 0 || playagain == 1)) {
+                        playagain;
+                    } else {
+                        printf("Invalid input. Please enter 1 for Yes or 0 for No.\n");
+                        while (getchar() != '\n'); // Clear input buffer
+                        goto play_again_label;
+                    }
+
                     break;
 
                 case 1:
@@ -294,8 +309,20 @@ int main() {
                     } else {
                         printf("Sorry, you ran out of tries. The correct word was: %s\n", x[wordIndex].word);
                     }
+                play_again_label_1:
+                    printf("Do you want to play again? (1 for Yes, 0 for No): ");
+                    scanf("%d", &playagain);
+
+                    if ((playagain == 0 || playagain == 1)) {
+                        playagain;
+                    } else {
+                        printf("Invalid input. Please enter 1 for Yes or 0 for No.\n");
+                        while (getchar() != '\n'); // Clear input buffer
+                        goto play_again_label_1;
+                    }
                     break;
             }
+            } while(playagain != 0);
 
             printf("Thank you for playing!\n");
             return 0;
